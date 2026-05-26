@@ -1,88 +1,50 @@
-import React, { useState } from 'react';
-import Login from './components/Login';
-import Sidebar from './components/Sidebar';
-import Dashboard from './components/Dashboard';
-import DataSiswa from './components/DataSiswa';
-import CetakSKL from './components/CetakSKL';
-import Pengaturan from './components/Pengaturan';
-import { ViewState, Siswa, ProfilLembaga } from './types';
-import { mockDataSiswa } from './data';
+import { useState } from 'react';
 
-const DEFAULT_LEMBAGA: ProfilLembaga = {
-  nama: "Madrasah Diniyah Takmiliyah Ula (MDTU) Darul Ilmi",
-  nsdt: "12345678901234",
-  alamat: "Jl. Pendidikan Keagamaan No. 99, Kota Santri, Indonesia",
-  kepala: "K.H. Burhanudin, S.Pd.I.",
-  nip: "19800101 200501 1 001",
-  tempatDitetapkan: "Kota Santri",
-  titimangsa: "25 Mei 2026"
-};
-
-export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentView, setCurrentView] = useState<ViewState>('dashboard');
-  const [dataSantri, setDataSantri] = useState<Siswa[]>(mockDataSiswa);
-  const [lembaga, setLembaga] = useState<ProfilLembaga>(DEFAULT_LEMBAGA);
-
-  if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />;
-  }
-
-  const handleUpdate = (updatedSiswa: Siswa) => {
-    setDataSantri(prev => prev.map(s => s.id === updatedSiswa.id ? updatedSiswa : s));
-  };
-  
-  const handleAdd = (newSiswa: Siswa) => {
-    setDataSantri(prev => [...prev, newSiswa]);
-  };
-
-  const handleBatchAdd = (newSiswas: Siswa[]) => {
-    setDataSantri(prev => [...prev, ...newSiswas]);
-  };
-
-  const handleDelete = (id: string) => {
-    if (confirm('Apakah Anda yakin ingin menghapus data santri ini?')) {
-      setDataSantri(prev => prev.filter(s => s.id !== id));
-    }
-  };
+function App() {
+  const [currentView, setCurrentView] = useState('dashboard');
 
   return (
-    <div className="flex h-screen bg-slate-50 overflow-hidden text-slate-900 font-sans">
-      <Sidebar currentView={currentView} onChangeView={setCurrentView} onLogout={() => setIsAuthenticated(false)} />
-      
-      <main className="flex-1 overflow-y-auto p-8 relative">
-        {currentView === 'dashboard' && <Dashboard data={dataSantri} />}
-        {currentView === 'data-siswa' && (
-          <DataSiswa data={dataSantri} onAdd={handleAdd} onBatchAdd={handleBatchAdd} onUpdate={handleUpdate} onDelete={handleDelete} />
+    <div className="flex h-screen bg-slate-50 text-slate-950 font-sans">
+      {/* SIDEBAR SEDERHANA */}
+      <aside className="w-64 bg-slate-900 text-white p-6 flex flex-col justify-between">
+        <div>
+          <h2 className="text-xl font-bold mb-6 text-emerald-400">MDTU Academic</h2>
+          <nav className="space-y-2">
+            <button 
+              onClick={() => setCurrentView('dashboard')} 
+              className={`w-full text-left py-2 px-3 rounded ${currentView === 'dashboard' ? 'bg-emerald-600' : 'hover:bg-slate-800'}`}
+            >
+              Dashboard
+            </button>
+            <button 
+              onClick={() => setCurrentView('siswa')} 
+              className={`w-full text-left py-2 px-3 rounded ${currentView === 'siswa' ? 'bg-emerald-600' : 'hover:bg-slate-800'}`}
+            >
+              Data Siswa
+            </button>
+          </nav>
+        </div>
+        <div className="text-sm text-slate-400">v1.0.0</div>
+      </aside>
+
+      {/* KONTEN UTAMA */}
+      <main className="flex-1 p-8 overflow-y-auto">
+        {currentView === 'dashboard' && (
+          <div>
+            <h1 className="text-3xl font-bold mb-4 text-slate-800">Selamat Datang di Sistem Akademik Santri</h1>
+            <p className="text-slate-600">Sistem ini siap digunakan untuk mengelola data lembaga MDTU Anda.</p>
+          </div>
         )}
-        {currentView === 'cetak-skl' && <CetakSKL data={dataSantri} lembaga={lembaga} />}
-        {currentView === 'pengaturan' && (
-          <Pengaturan lembaga={lembaga} onUpdateLembaga={setLembaga} />
+
+        {currentView === 'siswa' && (
+          <div>
+            <h1 className="text-3xl font-bold mb-4 text-slate-800">Data Siswa / Santri</h1>
+            <p className="text-slate-600">Halaman pengelolaan data santri aktif.</p>
+          </div>
         )}
-      </main>
-    </div>
-  );
-            {currentView === 'dashboard' && <Dashboard data={dataSantri} />}
-            {currentView === 'data-siswa' && (
-              <DataSiswa 
-                data={dataSantri} 
-                onAdd={handleAdd}
-                onBatchAdd={handleBatchAdd}
-                onUpdate={handleUpdate} 
-                onDelete={handleDelete} 
-              />
-            )}
-            {currentView === 'cetak-skl' && <CetakSKL data={dataSantri} lembaga={lembaga} />}
-            {currentView === 'pengaturan' && (
-              <Pengaturan 
-                lembaga={lembaga} 
-                onUpdateLembaga={setLembaga} 
-              />
-            )}
-          </motion.div>
-        </AnimatePresence>
       </main>
     </div>
   );
 }
 
+export default App;
