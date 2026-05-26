@@ -5,6 +5,9 @@ import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <BrowserRouter basename="/Akademik-MDTU">
+  <App />
+</BrowserRouter>
     <App />
   </StrictMode>,
 );
