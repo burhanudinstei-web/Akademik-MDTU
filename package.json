@@ -1,3 +1,10 @@
+hompage
+{
+  "name": "akademik-mdtu",
+  "version": "0.1.0",
+  "homepage": "https://burhanudinstei-web.github.io/Akademik-MDTU/",
+  "dependencies": { ... }
+}
 {
   "name": "react-example",
   "private": true,
