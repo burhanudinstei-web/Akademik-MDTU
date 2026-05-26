@@ -5,7 +5,7 @@ function App() {
 
   return (
     <div className="flex h-screen bg-slate-50 text-slate-950 font-sans">
-      {/* SIDEBAR SEDERHANA */}
+      {/* SIDEBAR */}
       <aside className="w-64 bg-slate-900 text-white p-6 flex flex-col justify-between">
         <div>
           <h2 className="text-xl font-bold mb-6 text-emerald-400">MDTU Academic</h2>
