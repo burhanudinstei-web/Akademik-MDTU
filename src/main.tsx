@@ -1,13 +1,13 @@
-import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'; // Pastikan ini diimpor jika belum ada
 import App from './App.tsx';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter basename="/Akademik-MDTU">
-  <App />
-</BrowserRouter>
-    <App />
+      <App />
+    </BrowserRouter>
   </StrictMode>,
 );
