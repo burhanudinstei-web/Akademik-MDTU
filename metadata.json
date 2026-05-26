@@ -1,0 +1,8 @@
+{
+  "name": "Sistem Akademik Santri",
+  "description": "Dashboard interaktif pengolahan data nilai santri dan cetak Surat Keterangan Lulus (SKL).",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
