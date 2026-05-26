@@ -3,5 +3,5 @@ import react from '@vitejs/react-refresh'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/Akademik-MDTU/', // <--- Tambahkan baris ini (sesuaikan dengan nama repo)
+  base: '/Akademik-MDTU/', //https://burhanudinstei-web.github.io/Akademik-MDTU/
 })
