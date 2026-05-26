@@ -7,7 +7,6 @@ import CetakSKL from './components/CetakSKL';
 import Pengaturan from './components/Pengaturan';
 import { ViewState, Siswa, ProfilLembaga } from './types';
 import { mockDataSiswa } from './data';
-import { motion, AnimatePresence } from 'motion/react';
 
 const DEFAULT_LEMBAGA: ProfilLembaga = {
   nama: "Madrasah Diniyah Takmiliyah Ula (MDTU) Darul Ilmi",
@@ -49,22 +48,20 @@ export default function App() {
 
   return (
     <div className="flex h-screen bg-slate-50 overflow-hidden text-slate-900 font-sans">
-      <Sidebar 
-        currentView={currentView} 
-        onChangeView={setCurrentView} 
-        onLogout={() => setIsAuthenticated(false)} 
-      />
+      <Sidebar currentView={currentView} onChangeView={setCurrentView} onLogout={() => setIsAuthenticated(false)} />
       
       <main className="flex-1 overflow-y-auto p-8 relative">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentView}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="h-full"
-          >
+        {currentView === 'dashboard' && <Dashboard data={dataSantri} />}
+        {currentView === 'data-siswa' && (
+          <DataSiswa data={dataSantri} onAdd={handleAdd} onBatchAdd={handleBatchAdd} onUpdate={handleUpdate} onDelete={handleDelete} />
+        )}
+        {currentView === 'cetak-skl' && <CetakSKL data={dataSantri} lembaga={lembaga} />}
+        {currentView === 'pengaturan' && (
+          <Pengaturan lembaga={lembaga} onUpdateLembaga={setLembaga} />
+        )}
+      </main>
+    </div>
+  );
             {currentView === 'dashboard' && <Dashboard data={dataSantri} />}
             {currentView === 'data-siswa' && (
               <DataSiswa 
